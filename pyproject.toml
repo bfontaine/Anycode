@@ -3,7 +3,10 @@ name = "anycode"
 version = "0.1.0"
 description = "Constants and functions generated on-the-fly by ChatGPT."
 authors = ["Baptiste Fontaine <b@ptistefontaine.fr>"]
+license = "MIT"
 readme = "README.md"
+homepage = "https://github.com/bfontaine/anycode"
+include = ["mmc/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
