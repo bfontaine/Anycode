@@ -12,6 +12,10 @@ python-dotenv = "^1.0.1"
 requests = "^2.31.0"
 
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+mypy = "^1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
