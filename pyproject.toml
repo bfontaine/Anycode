@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "anycode"
 version = "0.1.0"
-description = "Constants and functions generated on-the-fly by OpenAI."
+description = "Constants and functions generated on-the-fly by ChatGPT."
 authors = ["Baptiste Fontaine <b@ptistefontaine.fr>"]
 readme = "README.md"
 

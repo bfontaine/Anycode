@@ -1,6 +1,6 @@
 # Anycode
 
-**Anycode** is a Python module that uses OpenAI to automatically generate constants and functions based on their name.
+**Anycode** is a Python module that uses ChatGPT to automatically generate constants and functions based on their name.
 
 Just import `anycode` and use its dynamically-generated attributs: `anycode.PI` is `3.14…`,
 `anycode.SAMPLE_10_NAMES` is `['John', 'Jane', 'Adam', 'Eve', …]`, `anycode.SAMPLE_ISBN` is `"978-1-56619-909-4"` and
