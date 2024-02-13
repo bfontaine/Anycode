@@ -2,7 +2,7 @@ import inspect
 import json
 from json import JSONDecodeError
 import string
-from typing import Any, Callable, List, Dict, cast
+from typing import Any, Callable, List, Dict, cast, Union
 
 import openai
 from openai.types.chat import ChatCompletionMessageParam
@@ -75,7 +75,7 @@ def complete(*, init_messages: List[dict], message: str, model="gpt-3.5-turbo") 
     return cast(str, response.choices[0].message.content)
 
 
-def generate_constant(name: str) -> str | int | float | bool | list | Dict[str, Any] | None:
+def generate_constant(name: str) -> Union[str, int, float, bool, list, Dict[str, Any], None]:
     message = f"{name} = "
     openai_response = complete(
         init_messages=CONSTANT_INIT_MESSAGES,
