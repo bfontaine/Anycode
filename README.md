@@ -16,6 +16,8 @@ Or with Poetry:
 
     poetry add anycode
 
+We support Python 3.9+.
+
 ## Usage
 
 Note: you need a valid [OpenAI API key](https://platform.openai.com/api-keys). See below how to configure it.
