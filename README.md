@@ -2,7 +2,7 @@
 
 **Anycode** is a Python module that uses ChatGPT to automatically generate constants and functions based on their name.
 
-Just import `anycode` and use its dynamically-generated attributs: `anycode.PI` is `3.14…`,
+Just import `anycode` and use its dynamically-generated attributs: `anycode.PI` is `3.141592`,
 `anycode.SAMPLE_10_NAMES` is `['John', 'Jane', 'Adam', 'Eve', …]`, `anycode.SAMPLE_ISBN` is `"978-1-56619-909-4"` and
 so on.
 
@@ -53,7 +53,7 @@ print(anycode.TWO + anycode.TWO)  # 4
 
 print(anycode.ROT13_DICT)  # {'A': 'N', 'B': 'O', 'C': 'P', 'D': 'Q', 'E': 'R', ...}
 
-print(anycode.TEN_RANDOM_QUOTES) # ['The only way to do great work is to love what you do. - Steve Jobs', ...]
+print(anycode.TEN_RANDOM_QUOTES)  # ['The only way to do great work is to love what you do. - Steve Jobs', ...]
 
 print(anycode.OPENAI_API_KEY)  # raises a GenerationException("Cannot generate code for 'OPENAI_API_KEY'")
 ```
@@ -64,6 +64,7 @@ If you prefer can also import from the module:
 from anycode import HELLO, WORLD
 
 print(HELLO + " " + WORLD)
+# prints Hello World
 ```
 
 Any other value is a function:
@@ -78,13 +79,17 @@ anycode.say_goodbye("John")
 # prints "Goodbye, John!"
 ```
 
-Note that only simple functions work; if you try complex things ChatGPT fails to generate valid code and/or tries to
-import third-party modules.
-The generated code is executed on your machine, so do not use this in production.
+> [!TIP]
+> Simple functions work, but for complex things ChatGPT often fails to generate valid code.
 
-The function is generated when it’s called for the first time, so we know how many arguments it should take. Further
-calls reuse the cached function. Once a function has been generated, you can access `._openai_fn` on it to get the
-ChatGPT-generated function and `.openai_response` to get the ChatGPT text response.
+> [!CAUTION]
+> The generated code is executed on your machine, so do not use this in production.
+
+Accessing a function initiates it, but it doesn’t generate any code. We only do so when it’s called for the first time,
+so we know how many arguments it should take. Further calls reuse the cached function.
+
+Once a function has been generated, you can access `._openai_fn` on it to get the ChatGPT-generated function
+and `.openai_response` to get the ChatGPT text response.
 
 ### Exceptions
 
