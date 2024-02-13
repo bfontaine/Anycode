@@ -18,7 +18,7 @@ openai_client = OpenAI(
 
 
 def set_openai_api_key(api_key: str, force=True):
-    if not force or not openai_client.api_key:
+    if force or not openai_client.api_key:
         openai_client.api_key = api_key
 
 

@@ -4,8 +4,9 @@ from json import JSONDecodeError
 import string
 from typing import Any, Callable, List, Dict, cast, Union
 
-import openai
 from openai.types.chat import ChatCompletionMessageParam
+
+from anycode.client import openai_client
 
 __all__ = ["generate_constant", "generate_function", "generate_any"]
 
@@ -61,7 +62,12 @@ class GenerationException(Exception):
 
 
 def complete(*, init_messages: List[dict], message: str, model="gpt-3.5-turbo") -> str:
-    response = openai.chat.completions.create(
+    # Since we circumvent OpenAI’s API key check in the constructor, we have to do it by ourselves when we call the API
+    # otherwise we get a cryptic "Connection error".
+    assert openai_client.api_key != "", ("The OpenAI API key must be set!"
+                                         " Use anycode.set_openai_api_key or anycode.set_openai_api_key_from_env.")
+
+    response = openai_client.chat.completions.create(
         model=model,
         messages=cast(
             # https://github.com/openai/openai-python/issues/911#issuecomment-1834547461
