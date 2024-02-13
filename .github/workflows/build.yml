@@ -35,7 +35,7 @@ jobs:
 
       - name: Lint with Mypy
         run: |
-          poetry run mypy anycode
+          poetry run mypy --check-untyped-defs anycode
 
       - name: Run Tests
         run: |
