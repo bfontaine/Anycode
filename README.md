@@ -24,7 +24,8 @@ anycode.say_hello("Baptiste")
 # prints "Hello, Baptiste!"
 ```
 
-**Note:** I wrote this module for fun, please don’t use it in production.
+> [!IMPORTANT]
+> I wrote this module just for fun; please don’t use it in production.
 
 ## Install
 
