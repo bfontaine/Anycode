@@ -53,6 +53,8 @@ print(anycode.TWO + anycode.TWO)  # 4
 
 print(anycode.ROT13_DICT)  # {'A': 'N', 'B': 'O', 'C': 'P', 'D': 'Q', 'E': 'R', ...}
 
+print(anycode.TEN_RANDOM_QUOTES) # ['The only way to do great work is to love what you do. - Steve Jobs', ...]
+
 print(anycode.OPENAI_API_KEY)  # raises a GenerationException("Cannot generate code for 'OPENAI_API_KEY'")
 ```
 
