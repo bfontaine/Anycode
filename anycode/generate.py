@@ -1,8 +1,11 @@
+import inspect
 import json
 from json import JSONDecodeError
-from typing import Any, Callable
+import string
+from typing import Any, Callable, List, Dict, cast
 
 import openai
+from openai.types.chat import ChatCompletionMessageParam
 
 __all__ = ["generate_constant", "generate_function", "generate_any"]
 
@@ -11,7 +14,10 @@ EXCEPTION_RESPONSE_EXCERPT_SIZE = 20
 CONSTANT_INIT_MESSAGES = [
     {
         "role": "system",
-        "content": "You are a helpful assistant that writes JavaScript constants in JSON format. Use null instead of undefined."
+        "content": (
+            "You are a helpful assistant that writes JavaScript constants in JSON format."
+            " Use null instead of undefined."
+        )
     },
     {"role": "user", "content": "PI ="},
     {"role": "assistant", "content": "3.14159265359"},
@@ -24,6 +30,23 @@ CONSTANT_INIT_MESSAGES = [
     {"role": "user", "content": "NONE ="},
     {"role": "assistant", "content": "null"},
 ]
+
+FUNCTION_INIT_MESSAGES = [
+    {
+        "role": "system",
+        "content": (
+            "You are a helpful assistant that writes Python functions."
+            " Use the exact name provided by the user."
+            " Don’t explain your assumptions and write the full code."
+            " Don’t use any external module except requests."
+        ),
+    },
+    {"role": "user", "content": "def hello_world():"},
+    {"role": "assistant", "content": "def hello_world():\n    print(\"Hello, World!\")\n"},
+    {"role": "user", "content": "def add(a, b):"},
+    {"role": "assistant", "content": "def add(a, b):\n    return a + b\n"},
+]
+FUNCTION_ATTR_NAME = "_openai_fn"
 
 
 class GenerationException(Exception):
