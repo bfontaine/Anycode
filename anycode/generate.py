@@ -2,13 +2,13 @@ import inspect
 import json
 from json import JSONDecodeError
 import string
-from typing import Any, Callable, List, Dict, cast, Union
+from typing import Any, Callable, List, Dict, cast, Union, Protocol
 
 from openai.types.chat import ChatCompletionMessageParam
 
 from anycode.client import openai_client
 
-__all__ = ["generate_constant", "generate_function", "generate_any"]
+__all__ = ["generate_constant", "generate_function", "generate_any", "GeneratedFunction"]
 
 EXCEPTION_RESPONSE_EXCERPT_SIZE = 20
 
@@ -50,6 +50,13 @@ FUNCTION_INIT_MESSAGES = [
 FUNCTION_ATTR_NAME = "_openai_fn"
 
 
+class GeneratedFunction(Protocol):
+    _openai_response: str
+    _openai_fn: Callable
+
+    def __call__(self, *args, **kwargs): ...
+
+
 class GenerationException(Exception):
     def __init__(self, query: str, openai_response: str):
         excerpt = openai_response
@@ -61,7 +68,7 @@ class GenerationException(Exception):
         self.openai_response = openai_response
 
 
-def complete(*, init_messages: List[dict], message: str, model="gpt-3.5-turbo") -> str:
+def complete(*, init_messages: List[dict], message: str, model="gpt-3.5-turbo") -> str:  # pragma: nocover
     # Since we circumvent OpenAI’s API key check in the constructor, we have to do it by ourselves when we call the API
     # otherwise we get a cryptic "Connection error".
     assert openai_client.api_key != "", ("The OpenAI API key must be set!"
@@ -114,7 +121,7 @@ def _generate_args_string(args, kwargs) -> str:
     return ", ".join(args_string_fragments)
 
 
-def generate_function(name: str) -> Callable:
+def generate_function(name: str) -> GeneratedFunction:
     def fn(*args, **kwargs):
         if not hasattr(fn, FUNCTION_ATTR_NAME):
             args_string = _generate_args_string(args, kwargs)
@@ -149,7 +156,7 @@ def generate_function(name: str) -> Callable:
         return getattr(fn, FUNCTION_ATTR_NAME)(*args, **kwargs)
 
     fn.__name__ = name
-    return fn
+    return cast(GeneratedFunction, fn)
 
 
 def generate_any(name: str):
