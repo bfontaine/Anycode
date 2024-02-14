@@ -6,12 +6,12 @@ __version__ = "0.1.1"
 
 set_openai_api_key_from_env(force=False)
 
-this = sys.modules[__name__]
+__this = sys.modules[__name__]
 
 
 def __getattr__(name: str):
     from .generate import generate_any
 
     value = generate_any(name)
-    setattr(this, name, value)
+    setattr(__this, name, value)
     return value
