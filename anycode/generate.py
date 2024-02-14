@@ -53,6 +53,9 @@ FUNCTION_ATTR_NAME = "_openai_fn"
 class GeneratedFunction(Protocol):
     _openai_response: str
     _openai_fn: Callable
+    # We cannot subclass Callable so we have to add these by ourselves
+    __name__: str
+    __doc__: str
 
     def __call__(self, *args, **kwargs): ...
 
@@ -141,17 +144,22 @@ def generate_function(name: str) -> GeneratedFunction:
                 ) from e
 
             scope = dict(inspect.stack()[0].frame.f_globals)
+            previous_scope_keys = set(scope)
             exec(code, scope)  # YOLO
+            new_scope_keys = set(scope) - previous_scope_keys
 
             if name in scope:
                 openai_fn = scope[name]
-                setattr(fn, FUNCTION_ATTR_NAME, openai_fn)
-                setattr(fn, "_openai_response", openai_response)
+            elif len(new_scope_keys) == 1:
+                openai_fn = scope[new_scope_keys.pop()]
             else:
                 raise GenerationException(
                     function_signature,
                     openai_response=openai_response,
                 )
+
+            setattr(fn, FUNCTION_ATTR_NAME, openai_fn)
+            setattr(fn, "_openai_response", openai_response)
 
         return getattr(fn, FUNCTION_ATTR_NAME)(*args, **kwargs)
 

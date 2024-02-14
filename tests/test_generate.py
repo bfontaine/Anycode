@@ -45,17 +45,13 @@ def test_generate_function(complete_fn_mock: Mock):
     complete_fn_mock.assert_called_once()
 
 
-def test_generate_function_failure(complete_fn_mock: Mock):
-    complete_fn_mock.return_value = "oh no!"
-    f = generate_function("do_stuff")
-
-    with pytest.raises(GenerationException):
-        f()
-
-
 def test_generate_function_name_mismatch(complete_fn_mock: Mock):
     complete_fn_mock.return_value = "def do_b():\n    return 42\n"
     f = generate_function("do_a")
+
+    assert f() == 42
+    assert f.__name__ == "do_a"
+    assert f._openai_fn.__name__ == "do_b"
 
 
 def test_generate_function_failure(complete_fn_mock: Mock):
