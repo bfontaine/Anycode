@@ -1,5 +1,10 @@
 # Anycode Changelog
 
+## Unreleased
+
+* Fix the typing of generated functions to specify the `_openai_*` attributes
+* Don’t expose `anycode.this`
+
 ## v0.1.1 (2024/02/13)
 
 * Use our own OpenAI API client rather than the [module-level one][mlo]
