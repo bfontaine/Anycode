@@ -1,19 +1,13 @@
 from unittest.mock import Mock
 
 import pytest
-from pytest import fixture
 
 # noinspection PyProtectedMember
 from anycode.generate import _generate_args_string, generate_constant, GenerationException, generate_function, \
     generate_any
 
 
-@fixture
-def complete_fn_mock(mocker) -> Mock:
-    return mocker.patch('anycode.generate.complete')
-
-
-def test_generate_constant(mocker, complete_fn_mock):
+def test_generate_constant(complete_fn_mock):
     complete_fn_mock.return_value = "42"
     assert generate_constant("FOO") == 42
     complete_fn_mock.assert_called_once()
@@ -61,6 +55,19 @@ def test_generate_function_failure(complete_fn_mock: Mock):
 
 def test_generate_function_name_mismatch(complete_fn_mock: Mock):
     complete_fn_mock.return_value = "def do_b():\n    return 42\n"
+    f = generate_function("do_a")
+
+
+def test_generate_function_failure(complete_fn_mock: Mock):
+    complete_fn_mock.return_value = "oh no!"
+    f = generate_function("do_stuff")
+
+    with pytest.raises(GenerationException):
+        f()
+
+
+def test_generate_function_multiple_definitions_name_mismatch(complete_fn_mock: Mock):
+    complete_fn_mock.return_value = "def f():\n    return 42\n\ndef g():\n    return 43\n"
     f = generate_function("do_a")
 
     with pytest.raises(GenerationException):
