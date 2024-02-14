@@ -24,6 +24,13 @@ anycode.say_hello("Baptiste")
 # prints "Hello, Baptiste!"
 ```
 
+You can also `import` anything:
+
+```python
+from anycode import print_whatever
+print_whatever()
+```
+
 > [!IMPORTANT]
 > I wrote this module just for fun; please don’t use it in production.
 
