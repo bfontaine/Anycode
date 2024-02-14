@@ -2,7 +2,7 @@ import sys
 
 from .client import set_openai_api_key, set_openai_api_key_from_env
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 set_openai_api_key_from_env(force=False)
 
