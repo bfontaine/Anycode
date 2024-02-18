@@ -5,4 +5,4 @@ from pytest import fixture
 
 @fixture
 def complete_fn_mock(mocker) -> Mock:
-    return mocker.patch('anycode.generate.complete')
+    return mocker.patch('anycode.generation.complete')

@@ -3,7 +3,7 @@ from unittest.mock import Mock
 import pytest
 
 # noinspection PyProtectedMember
-from anycode.generate import _generate_args_string, generate_constant, GenerationException, generate_function, \
+from anycode.generation import _generate_args_string, generate_constant, GenerationException, generate_function, \
     generate_any
 
 

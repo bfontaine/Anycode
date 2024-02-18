@@ -1,4 +1,5 @@
 import sys
+from typing import TextIO
 
 from .client import set_openai_api_key, set_openai_api_key_from_env
 
@@ -10,7 +11,7 @@ __this = sys.modules[__name__]
 
 
 def __getattr__(name: str):
-    from .generate import generate_any
+    from .generation import generate_any
 
     value = generate_any(name)
     setattr(__this, name, value)

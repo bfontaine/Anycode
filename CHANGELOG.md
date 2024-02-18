@@ -1,5 +1,9 @@
 # Anycode Changelog
 
+## Unreleased
+
+* Rename `anycode.generate` as `anycode.generation`
+
 ## v0.1.2 (2024/02/14)
 
 * Fix the typing of generated functions to specify the `_openai_*` attributes
