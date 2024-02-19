@@ -163,3 +163,6 @@ openai_client.default_headers = {"x-foo": "true"}
 ## License
 
 Copyright © 2024 – Baptiste Fontaine. See the [LICENSE](./LICENSE) file.
+
+Although it doesn’t share any code with it, this project was inspired by the
+[StackOverflow Importer](https://github.com/drathier/stack-overflow-import).
