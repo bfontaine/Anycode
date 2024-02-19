@@ -24,15 +24,12 @@ anycode.say_hello("Baptiste")
 # prints "Hello, Baptiste!"
 ```
 
-You can also `import` anything:
+You can also `import` anything `from anycode`:
 
 ```python
 from anycode import print_whatever
 print_whatever()
 ```
-
-> [!IMPORTANT]
-> I wrote this module just for fun; please don’t use it in production.
 
 ## Install
 
@@ -91,7 +88,7 @@ anycode.say_goodbye("John")
 > Simple functions work, but for complex things ChatGPT often fails to generate valid code.
 
 > [!CAUTION]
-> The generated code is executed on your machine, so do not use this in production.
+> The generated code is executed on the same machine as your code, so do not use this in production.
 
 Accessing a function initiates it, but it doesn’t generate any code. We only do so when it’s called for the first time,
 so we know how many arguments it should take. Further calls reuse the cached function.
@@ -126,6 +123,15 @@ del anycode.GITHUB_URL
 print(anycode.GITHUB_URL)
 ```
 
+You can dump all the generated code in a file to save it for future usage:
+
+```python
+with open("mycode.py", "w") as f:
+    anycode.dump(f)
+```
+
+This allows you to inspect and reuse the generated code without Anycode nor OpenAI API calls.
+
 ## Configuration
 
 ### OpenAI API key
@@ -141,6 +147,8 @@ anycode.set_openai_api_key("your-api-key")
 # or from an environment variable
 anycode.set_openai_api_key_from_env("MY_OPENAI_API_KEY")
 ```
+
+The typical usage is quite low: to develop and test this entire project I used $0.02 of credit.
 
 ### Advanced configuration
 
