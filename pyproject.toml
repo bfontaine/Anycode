@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "anycode"
-version = "0.1.2"
+version = "0.2.0"
 description = "Constants and functions generated on-the-fly by ChatGPT."
 authors = ["Baptiste Fontaine <b@ptistefontaine.fr>"]
 license = "MIT"

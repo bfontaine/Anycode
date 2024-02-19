@@ -3,7 +3,7 @@ from typing import Any, TextIO
 
 from .client import set_openai_api_key, set_openai_api_key_from_env
 
-__version__ = "0.1.2"
+__version__ = "0.2.0"
 
 set_openai_api_key_from_env(force=False)
 
@@ -39,6 +39,8 @@ def dump(f: TextIO):
             anycode.dump(f)
     """
     for name, value in __generated.items():
+        # Circumvent hasattr calling our __getattr__ function
+        # https://stackoverflow.com/a/78023398/735926
         if name not in __this.__dict__:  # skip deleted items
             continue
 
