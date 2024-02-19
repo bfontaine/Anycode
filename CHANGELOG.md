@@ -1,8 +1,9 @@
 # Anycode Changelog
 
-## Unreleased
+## v0.2.0 (unreleased)
 
-* Rename `anycode.generate` as `anycode.generation`
+* Rename module `anycode.generate` as `anycode.generation`
+* Add `anycode.clear`, `anycode.dump`, `anycode.dumps`
 
 ## v0.1.2 (2024/02/14)
 
